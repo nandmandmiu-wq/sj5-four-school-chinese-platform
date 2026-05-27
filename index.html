@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>四校聯考中文科分析與模擬平台</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#e6e8ef;--dark:#111827;
+      --soft:#f1f5f9;--accent:#2563eb;--good:#16a34a;--bad:#dc2626;--warn:#d97706;
+    }
+    *{box-sizing:border-box}body{margin:0;font-family:"Noto Sans TC","Microsoft JhengHei",Arial,sans-serif;background:var(--bg);color:var(--ink)}
+    header{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:20}
+    .wrap{max-width:1180px;margin:auto;padding:18px 22px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px}
+    .brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:18px;background:var(--dark);color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 8px 20px rgba(0,0,0,.1)}
+    h1{margin:0;font-size:22px}.sub{font-size:13px;color:var(--muted);margin-top:4px}.pill{display:inline-flex;align-items:center;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;color:#475467}
+    nav{max-width:1180px;margin:0 auto;padding:0 22px 14px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.tab{border:0;border-radius:16px;padding:13px 10px;background:#e9edf5;color:#334155;font-weight:700;cursor:pointer}.tab.active{background:var(--dark);color:#fff}
+    main{max-width:1180px;margin:auto;padding:22px}.grid{display:grid;gap:16px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}.g2{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:290px 1fr}.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:20px;box-shadow:0 8px 24px rgba(15,23,42,.04)}
+    .metric{font-size:28px;font-weight:900;margin-top:6px}.muted{color:var(--muted)}.small{font-size:13px}.title{font-size:20px;font-weight:900;margin:0 0 8px}.section-title{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
+    .bar-row{display:grid;grid-template-columns:84px 1fr 50px;align-items:center;gap:10px;margin:12px 0}.bar-bg{height:11px;background:#edf1f7;border-radius:999px;overflow:hidden}.bar-fill{height:100%;background:#334155;border-radius:999px}.badge{display:inline-block;font-size:12px;border:1px solid var(--line);border-radius:999px;padding:4px 9px;background:#f8fafc;color:#475467}.dark-card{background:var(--dark);color:#fff}.dark-card .muted{color:#cbd5e1}.dark-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}.dark-list div{background:rgba(255,255,255,.1);border-radius:16px;padding:13px;font-size:14px}
+    .chart{height:260px;display:flex;align-items:flex-end;gap:16px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 10px 0 16px}.col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}.colbar{width:100%;max-width:48px;background:#334155;border-radius:12px 12px 0 0;min-height:8px}.xlabel{font-size:12px;color:#667085;white-space:nowrap}.xnum{font-size:12px;font-weight:800;color:#334155}
+    .line-chart{height:260px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(#fff,#fff),repeating-linear-gradient(to bottom,transparent 0,transparent 49px,#eef2f7 50px);padding:10px}.line-chart svg{width:100%;height:100%}
+    .side{max-height:590px;overflow:auto;padding-right:6px}.cat{width:100%;text-align:left;border:0;border-radius:15px;padding:12px 14px;margin:5px 0;background:#f1f5f9;color:#334155;cursor:pointer;font-weight:650}.cat.active{background:var(--dark);color:#fff}
+    input,select{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:12px 13px;font-size:14px}button{font-family:inherit}.info3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.infobox{background:#f8fafc;border-radius:22px;padding:18px}.infobox h3{margin:8px 0 8px}.icon{font-size:22px}.progress{height:9px;background:#edf1f7;border-radius:999px;overflow:hidden;margin-top:12px}.progress span{display:block;height:100%;background:#334155;border-radius:999px}
+    .q-list{max-height:640px;overflow:auto;padding-right:6px}.qpick{width:100%;border:1px solid var(--line);border-radius:20px;background:#fff;padding:14px;margin-bottom:10px;text-align:left;cursor:pointer}.qpick.active{background:var(--dark);color:#fff}.qpick.active .badge{background:#fff;color:#111827}.question{border-radius:24px;background:#fff;border:1px solid var(--line);padding:20px;margin-bottom:16px}.opt{width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 14px;margin:8px 0;cursor:pointer}.opt.chosen{background:#eef2ff;border-color:#64748b}.opt.correct{background:#ecfdf3;border-color:#86efac}.opt.wrong{background:#fef2f2;border-color:#fca5a5}.explain{margin-top:12px;border-radius:16px;background:#f8fafc;padding:14px;font-size:14px;line-height:1.7}.actions{display:flex;gap:10px;justify-content:flex-end}.btn{border:0;border-radius:16px;padding:12px 18px;font-weight:800;cursor:pointer;background:var(--dark);color:#fff}.btn.secondary{background:#fff;color:#111827;border:1px solid var(--line)}
+    .report-box{border-radius:22px;padding:18px;line-height:1.75}.good{background:#ecfdf3}.warn{background:#fffbeb}.neutral{background:#f8fafc}.radar{height:300px}.hide{display:none!important}.footer-note{margin-top:22px;text-align:center;color:#98a2b3;font-size:12px}
+    @media(max-width:900px){.g4,.g3,.g2,.layout,.info3{grid-template-columns:1fr}nav{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start;flex-direction:column}.pill{display:none}.chart{gap:8px}.xlabel{font-size:10px}.actions{justify-content:stretch}.btn{flex:1}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div class="brand"><div class="logo">文</div><div><h1>四校聯考中文科分析與模擬平台</h1><div class="sub">2015–2025 題型分析｜題庫練習｜學生診斷報告</div></div></div>
+      <div><span class="pill">GitHub Pages 單檔版 index.html</span></div>
+    </div>
+    <nav>
+      <button class="tab active" data-page="dashboard">總體數字</button>
+      <button class="tab" data-page="analysis">各題型分析</button>
+      <button class="tab" data-page="quiz">模擬試題</button>
+      <button class="tab" data-page="report">分析報告</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="dashboard" class="page grid">
+      <div class="grid g4">
+        <div class="card"><div class="muted small">分析年份</div><div class="metric">2015–2025</div><div class="muted small">可擴充至新年度</div></div>
+        <div class="card"><div class="muted small">題型模組</div><div class="metric">23項</div><div class="muted small">按現行分類建立</div></div>
+        <div class="card"><div class="muted small">題目形式</div><div class="metric">30題＋作文</div><div class="muted small">語基／閱讀／寫作</div></div>
+        <div class="card"><div class="muted small">使用對象</div><div class="metric">教師＋學生</div><div class="muted small">備課、操卷、診斷</div></div>
+      </div>
+
+      <div class="grid g3">
+        <div class="card" style="grid-column:span 2">
+          <div class="section-title"><div><h2 class="title">常考篇章來源：朝代分布</h2><div class="muted small">用作判斷備課重心：先秦、兩漢、唐宋、現代文學。</div></div><span class="badge">整體趨勢</span></div>
+          <div id="dynastyChart" class="chart"></div>
+        </div>
+        <div class="card">
+          <h2 class="title">高頻作者 Top 6</h2>
+          <div id="authorBars"></div>
+        </div>
+      </div>
+
+      <div class="grid g2">
+        <div class="card">
+          <h2 class="title">歷年卷面結構</h2>
+          <div class="muted small">示意：語文基礎、篇章閱讀、寫作三部分可作年度比較。</div>
+          <div class="line-chart"><svg viewBox="0 0 700 230" preserveAspectRatio="none" id="lineSvg"></svg></div>
+        </div>
+        <div class="card dark-card">
+          <h2 class="title">平台定位</h2>
+          <p class="muted" style="line-height:1.8">這不是單純題庫，而是把「歷年命題規律」轉成可操作的備課與操練系統：先看總體趨勢，再進入23項題型，最後讓學生做模擬卷並生成診斷報告。</p>
+          <div class="dark-list"><div>按年份組卷</div><div>按題型組卷</div><div>即時核對答案</div><div>生成弱項報告</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="analysis" class="page grid layout hide">
+      <aside class="card">
+        <input id="catSearch" placeholder="搜尋題型，例如：病句" />
+        <div id="catList" class="side" style="margin-top:12px"></div>
+      </aside>
+      <div class="grid">
+        <div class="card">
+          <div class="section-title">
+            <div><h2 id="catTitle" class="title">讀音</h2><div id="catSub" class="muted small"></div></div>
+            <select id="yearFilter"><option>全部年份</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select>
+          </div>
+          <div class="grid g3">
+            <div class="infobox"><div class="muted small">命題穩定度</div><div id="catFreq" class="metric">92%</div><div class="progress"><span id="catProgress" style="width:92%"></span></div></div>
+            <div class="infobox"><div class="muted small">主要能力</div><div class="metric" style="font-size:22px">辨識＋語境</div><div class="muted small">可連接題庫自動細分</div></div>
+            <div class="infobox"><div class="muted small">建議練習</div><div class="metric" style="font-size:22px">分類題組</div><div class="muted small">由低頻到高頻排序</div></div>
+          </div>
+        </div>
+        <div class="info3">
+          <div class="card"><div class="icon">🎯</div><h3>核心考點</h3><p id="coreText" class="muted"></p></div>
+          <div class="card"><div class="icon">⚠️</div><h3>常見陷阱</h3><p id="trapText" class="muted"></p></div>
+          <div class="card"><div class="icon">📘</div><h3>教學建議</h3><p id="strategyText" class="muted"></p></div>
+        </div>
+        <div class="card"><h2 class="title">可擴充欄位設計</h2><div class="grid g4" id="fieldGrid"></div></div>
+      </div>
+    </section>
+
+    <section id="quiz" class="page hide">
+      <div class="card grid">
+        <div class="grid g3">
+          <select id="quizYear"><option>全部年份</option><option>2025</option><option>2024</option><option>2023</option><option>2022</option><option>2021</option></select>
+          <select id="quizCat"><option>全部題型</option></select>
+          <input id="qSearch" placeholder="搜尋題幹、題型、關鍵字" />
+        </div>
+        <div class="grid layout">
+          <aside>
+            <div class="section-title"><h2 class="title">題庫選題</h2><span class="badge" id="selectedCount">已選 3 題</span></div>
+            <div id="qPickList" class="q-list"></div>
+          </aside>
+          <section>
+            <div class="section-title">
+              <div><h2 class="title">模擬試卷</h2><div class="muted small">可按年份、題型自由組卷；完成後顯示答案與解析。</div></div>
+              <div class="actions"><button class="btn secondary" id="resetBtn">重做</button><button class="btn" id="submitBtn">提交並分析</button></div>
+            </div>
+            <div id="paper"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section id="report" class="page grid hide">
+      <div class="grid g4">
+        <div class="card"><div class="muted small">模擬得分</div><div class="metric" id="scoreBox">0/3</div><div class="muted small">按目前模擬卷計算</div></div>
+        <div class="card"><div class="muted small">正確率</div><div class="metric" id="accBox">0%</div><div class="progress"><span id="accProgress" style="width:0%"></span></div></div>
+        <div class="card"><div class="muted small">強項</div><div class="metric" style="font-size:22px">文化／語境</div><div class="muted small">由答題結果自動判斷</div></div>
+        <div class="card"><div class="muted small">弱項</div><div class="metric" style="font-size:22px">文言句式</div><div class="muted small">建議優先補底</div></div>
+      </div>
+      <div class="grid g2">
+        <div class="card"><h2 class="title">能力雷達圖 Demo</h2><div class="muted small">正式版可按學生答題結果自動生成。</div><svg class="radar" viewBox="0 0 400 320" id="radarSvg"></svg></div>
+        <div class="card grid">
+          <h2 class="title">學生診斷報告 Demo</h2>
+          <div class="report-box good"><b>優點</b><br>能掌握語境類題目，對成語、澳門文化及部分現代文理解較穩定；答題時能排除明顯錯誤選項，基礎判斷力尚可。</div>
+          <div class="report-box warn"><b>問題</b><br>文言句式與虛詞仍屬弱項，容易把「被動句、賓語前置、倒裝句」混為一談；讀題時亦有忽略「正確／錯誤／不屬於」等題幹方向的情況。</div>
+          <div class="report-box neutral"><b>改進建議</b><br>建議先做「文言句式五日小練」，每天集中一類句式；完成後再混合練習，並要求學生寫出錯因，而不只是抄答案。</div>
+        </div>
+      </div>
+      <div class="card"><h2 class="title">教師版跟進清單</h2><div class="grid g3"><div class="infobox"><b>個人補救</b><p class="muted small">按學生錯題自動生成3–5題同類題，避免盲目操卷。</p></div><div class="infobox"><b>班級統計</b><p class="muted small">查看全班在23項題型中的共同弱點，安排下週小測。</p></div><div class="infobox"><b>年度比較</b><p class="muted small">比較不同年份、不同題型的命中率，調整高三備考次序。</p></div></div></div>
+    </section>
+
+    <div class="footer-note">Designed with ChatGPT｜四校聯考中文科分析與模擬平台 初稿</div>
+  </main>
+
+<script>
+const categories=["讀音","錯別字","成語","六書","謙詞敬語","病句","關聯詞","標點符號","修辭與語言藝術","構詞及詞語運用","文言句式","古今異義及虛詞實詞","通假字","詞類活用","文學體裁","作家作品","文學配對","經典理解","傳統文化","澳門問題","閱讀理解（現代文）","閱讀理解（文言文）","寫作能力"];
+const dynastyData=[{name:"先秦",count:119},{name:"兩漢",count:95},{name:"唐",count:72},{name:"兩宋",count:50},{name:"現代",count:39},{name:"清",count:13},{name:"明",count:9}];
+const authorData=[{name:"司馬遷",count:50},{name:"孔子",count:33},{name:"韓愈",count:20},{name:"孟子",count:19},{name:"蘇軾",count:17},{name:"魯迅",count:15}];
+const profiles={
+"讀音":{core:"由單字讀音轉向詞語、成語、多音字及聲調細辨。",trap:"多音字、聲調差異、形近音近、反向判斷。",strategy:"建立同音字群與多音字清單，練習先看題幹是否問『完全相同』。",freq:92,years:"2015–2025",difficulty:"中高"},
+"錯別字":{core:"每年穩定出現，重點在成語字形、形近字、音近字。",trap:"熟詞錯寫、形近誤判、音近替代、反向題。",strategy:"以錯字清單＋成語固定搭配作分層練習。",freq:95,years:"2015–2025",difficulty:"中"},
+"成語":{core:"由單純詞義逐步轉為語境判斷，近義成語辨析加強。",trap:"望文生義、褒貶色彩錯、近義混淆。",strategy:"把成語放回句子，判斷對象、語境、感情色彩。",freq:90,years:"2015–2025",difficulty:"中高"},
+"文言句式":{core:"賓語前置、被動句、倒裝句、判斷句等輪流出現。",trap:"只背名稱，不懂句中標誌；把介詞結構後置與賓語前置混淆。",strategy:"先找主謂賓，再看標誌字，如『見、為、於、之、是』。",freq:88,years:"2017–2025",difficulty:"高"},
+"閱讀理解（文言文）":{core:"固定五題邏輯：實詞、虛詞、翻譯、內容、主旨。",trap:"用常見義取代語境義；過度意譯；局部理解取代全文主旨。",strategy:"按『字詞—句式—段意—主旨』四步閱讀。",freq:85,years:"2015–2025",difficulty:"高"},
+"寫作能力":{core:"多採雙材料、對立觀點或辯證式命題，重視思辨能力。",trap:"只寫單邊觀點、例子空泛、結尾倉促。",strategy:"用起承轉合或正反合結構，先定立意，再配例證。",freq:100,years:"2015–2025",difficulty:"高"}
+};
+const qs=[
+{id:"2025-Q1",year:"2025",category:"讀音",title:"普通話讀音完全相同",stem:"下列詞語中的劃線字，普通話讀音完全相同的一組是：",options:["薔薇／倔強／墻壁／襁褓","緬懷／沉湎／勉勵／免疫","竭力／結實／戒嚴／揭示","勾銷／苟且／溝通／扣押"],answer:1,explanation:"此題考同音群與聲調細辨，學生容易只看字形相近而忽略讀音。"},
+{id:"2025-Q6",year:"2025",category:"病句",title:"語病辨識",stem:"下列句子中，沒有語病的一項是：",options:["被『贏在起跑線』的思維束縛下，近年來越來越多家長安排子女同時入讀兩所幼稚園。","在困難面前，他從不輕言放棄，一直在努力提升自己的科研水準和知識領域。","我的人生中經歷了多次失敗的經驗，學到了很多教訓。","鑒於道路升級改造，所有車輛均須繞行，以免影響工程。"],answer:3,explanation:"A句式雜糅，B搭配不當，C語意重複；D語意完整、搭配自然。"},
+{id:"2024-Q9",year:"2024",category:"修辭與語言藝術",title:"修辭判斷",stem:"關於下列語句中的修辭手法，判斷錯誤的一項是：",options:["黃河是一條寬而黃的長帶子，小清河是一條綠的頭繩。——明喻","可是又能用甚麼來計算人的損失呢？活生生的人是無價的。——設問","屈平疾王聽之不聰也……方正之不容也。——排比","土地把債務都已還清……自然舒了一口氣。——擬人"],answer:0,explanation:"A項屬比喻，但未使用『像、如、似』等明喻標誌，標為明喻不準確。"},
+{id:"2023-Q4",year:"2023",category:"六書",title:"造字法判斷",stem:"下列各組關於漢字造字法的解釋，正確的一項是：",options:["虎、牛、獅、魚，都是象形字","刃、本、末、亦，都是指事字","鳴、苗、炎、呼，都是會意字","武、鯉、桃、洲，都是形聲字"],answer:1,explanation:"此題考四大造字法的基本辨識，重點是不要把形聲字誤作會意字。"},
+{id:"2022-Q11",year:"2022",category:"文言句式",title:"賓語前置",stem:"下列句子中，不屬於賓語前置的一項是：",options:["身客死於秦，為天下笑。","世溷濁而莫余知兮，吾方高馳而不顧。","去我三十里，唯命是聽。","良問曰：『大王來何操？』"],answer:0,explanation:"A為被動句；B、C、D均有賓語前置特徵。"},
+{id:"2021-Q7",year:"2021",category:"關聯詞",title:"關聯詞填空",stem:"依次填入語段劃線處的關聯詞語，最恰當的一項是：",options:["因為／但是／如果／因此／於是","如果／即使／由於／為了／所以","由於／但是／雖然／因為／所以","因為／但是／如果／為了／並且"],answer:3,explanation:"此題要先判斷前後句的因果、轉折、假設、目的與並列關係。"}
+];
+let currentCat="讀音", selected=["2025-Q1","2025-Q6","2024-Q9"], answers={}, submitted=false;
+function $(id){return document.getElementById(id)}
+function initTabs(){document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.querySelectorAll('.page').forEach(p=>p.classList.add('hide'));$(b.dataset.page).classList.remove('hide'); if(b.dataset.page==='report') renderReport();});}
+function renderDashboard(){const max=Math.max(...dynastyData.map(d=>d.count));$('dynastyChart').innerHTML=dynastyData.map(d=>`<div class="col"><div class="xnum">${d.count}</div><div class="colbar" style="height:${Math.round(d.count/max*205)}px"></div><div class="xlabel">${d.name}</div></div>`).join(''); const amax=50;$('authorBars').innerHTML=authorData.map((a,i)=>`<div class="bar-row"><div>${i+1}. ${a.name}</div><div class="bar-bg"><div class="bar-fill" style="width:${a.count/amax*100}%"></div></div><b>${a.count}</b></div>`).join(''); renderLine();}
+function renderLine(){const svg=$('lineSvg'), years=[2015,2017,2018,2019,2020,2021,2022,2023,2024,2025]; const x=i=>30+i*(640/(years.length-1)); const y=v=>210-v*3.2; const path=(vals)=>vals.map((v,i)=>(i?'L':'M')+x(i)+','+y(v)).join(' '); svg.innerHTML=`<path d="${path([30,40,40,40,40,40,40,40,40,40])}" fill="none" stroke="#334155" stroke-width="4"/><path d="${path([20,20,20,20,20,20,20,20,20,20])}" fill="none" stroke="#64748b" stroke-width="4"/><path d="${path([50,40,40,40,40,40,40,40,40,40])}" fill="none" stroke="#94a3b8" stroke-width="4"/>`+years.map((yr,i)=>`<text x="${x(i)}" y="228" text-anchor="middle" font-size="12" fill="#667085">${String(yr).slice(2)}</text>`).join('')+`<text x="520" y="28" font-size="13" fill="#334155">語基</text><text x="520" y="83" font-size="13" fill="#64748b">閱讀</text><text x="520" y="52" font-size="13" fill="#94a3b8">寫作</text>`;}
+function renderCats(){const q=($('catSearch')?.value||''); $('catList').innerHTML=categories.filter(c=>!q||c.includes(q)).map(c=>`<button class="cat ${c===currentCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join(''); const sel=$('quizCat'); if(sel && sel.options.length<3){categories.forEach(c=>sel.innerHTML+=`<option>${c}</option>`)}; renderCatDetail();}
+window.setCat=function(c){currentCat=c;renderCats();}
+function renderCatDetail(){const p=profiles[currentCat]||{core:"此模組可接入歷年試題後自動產生考點、趨勢、陷阱題及教學建議。",trap:"待匯入更多題目後自動整理。",strategy:"先按年度及題型標籤建立題庫，再逐題加入考點與答案解析。",freq:70,years:"2015–2025",difficulty:"中"}; $('catTitle').textContent=currentCat;$('catSub').textContent=`年度範圍：${p.years}｜難度：${p.difficulty}`;$('catFreq').textContent=p.freq+'%';$('catProgress').style.width=p.freq+'%';$('coreText').textContent=p.core;$('trapText').textContent=p.trap;$('strategyText').textContent=p.strategy; const fields=["年份","題號","題型","考點","正確答案","錯誤選項類型","難度","教學備註"]; $('fieldGrid').innerHTML=fields.map(f=>`<div class="infobox small"><b>${f}</b></div>`).join('');}
+function renderQuiz(){const y=$('quizYear').value, c=$('quizCat').value, s=$('qSearch').value; const list=qs.filter(q=>(y==='全部年份'||q.year===y)&&(c==='全部題型'||q.category===c)&&(!s||(q.stem+q.title+q.category).includes(s))); $('qPickList').innerHTML=list.map(q=>`<button class="qpick ${selected.includes(q.id)?'active':''}" onclick="toggleQ('${q.id}')"><b>${q.id}</b> <span class="badge">${q.category}</span><div class="small" style="margin-top:8px;opacity:.8">${q.title}</div></button>`).join(''); $('selectedCount').textContent=`已選 ${selected.length} 題`; renderPaper();}
+window.toggleQ=function(id){submitted=false; selected=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id]; renderQuiz();}
+function renderPaper(){const list=qs.filter(q=>selected.includes(q.id)); $('paper').innerHTML=list.map((q,idx)=>`<div class="question"><div style="display:flex;justify-content:space-between"><span class="badge">${q.year}</span><span class="badge">${q.category}</span></div><h3>${idx+1}. ${q.stem}</h3>${q.options.map((op,i)=>{let cls='opt'; if(answers[q.id]===i)cls+=' chosen'; if(submitted&&q.answer===i)cls+=' correct'; if(submitted&&answers[q.id]===i&&q.answer!==i)cls+=' wrong'; return `<button class="${cls}" onclick="chooseAns('${q.id}',${i})">${String.fromCharCode(65+i)}. ${op}</button>`}).join('')}${submitted?`<div class="explain"><b>答案：</b>${String.fromCharCode(65+q.answer)}　<b>解析：</b>${q.explanation}</div>`:''}</div>`).join('')||'<div class="muted">請先在左方選擇題目。</div>';}
+window.chooseAns=function(id,i){submitted=false; answers[id]=i; renderPaper();}
+function renderReport(){const list=qs.filter(q=>selected.includes(q.id)); const score=list.reduce((s,q)=>s+(answers[q.id]===q.answer?1:0),0); const acc=list.length?Math.round(score/list.length*100):0; $('scoreBox').textContent=`${score}/${list.length}`;$('accBox').textContent=acc+'%';$('accProgress').style.width=acc+'%'; renderRadar();}
+function renderRadar(){const svg=$('radarSvg'), labels=[['語基',78],['文言',55],['現代文',72],['文學常識',62],['文化澳門',83],['審題',68]], cx=200,cy=160,maxR=110; let html=''; for(let r of [.25,.5,.75,1]){let pts=labels.map((_,i)=>{let a=-Math.PI/2+i*2*Math.PI/labels.length;return `${cx+Math.cos(a)*maxR*r},${cy+Math.sin(a)*maxR*r}`}).join(' ');html+=`<polygon points="${pts}" fill="none" stroke="#e5e7eb"/>`;} labels.forEach((l,i)=>{let a=-Math.PI/2+i*2*Math.PI/labels.length;html+=`<line x1="${cx}" y1="${cy}" x2="${cx+Math.cos(a)*maxR}" y2="${cy+Math.sin(a)*maxR}" stroke="#e5e7eb"/><text x="${cx+Math.cos(a)*(maxR+24)}" y="${cy+Math.sin(a)*(maxR+24)}" text-anchor="middle" font-size="13" fill="#475467">${l[0]}</text>`}); let pts=labels.map((l,i)=>{let a=-Math.PI/2+i*2*Math.PI/labels.length,r=maxR*l[1]/100;return `${cx+Math.cos(a)*r},${cy+Math.sin(a)*r}`}).join(' '); html+=`<polygon points="${pts}" fill="rgba(51,65,85,.25)" stroke="#334155" stroke-width="3"/>`; svg.innerHTML=html;}
+$('catSearch').oninput=renderCats;['quizYear','quizCat','qSearch'].forEach(id=>$(id).oninput=renderQuiz);$('submitBtn').onclick=()=>{submitted=true;renderPaper();renderReport();document.querySelector('[data-page="report"]').click();};$('resetBtn').onclick=()=>{answers={};submitted=false;renderPaper();renderReport();};
+initTabs();renderDashboard();renderCats();renderQuiz();renderReport();
+</script>
+</body>
+</html>
